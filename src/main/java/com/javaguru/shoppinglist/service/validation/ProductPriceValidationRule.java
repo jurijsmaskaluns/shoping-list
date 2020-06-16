@@ -1,13 +1,12 @@
 package com.javaguru.shoppinglist.service.validation;
 
-import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.dto.ProductDto;
 
 public class ProductPriceValidationRule implements ProductValidationRule {
     @Override
-    public Product validate(Product product) {
-        if (product.getPrice().intValue() <= 0) {
+    public void validate(ProductDto productDto) {
+        if (productDto.getPrice().intValue() <= 0) {
             throw new ProductValidationException("цена продукта должна быть больше 0");
         }
-        return product;
     }
 }

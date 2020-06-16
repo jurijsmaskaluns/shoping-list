@@ -1,8 +1,9 @@
 package com.javaguru.shoppinglist.domain;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-public class Product {
+public class ProductEntity {
 
     private Long id;
     private String name;
@@ -47,7 +48,7 @@ public class Product {
                 '}';
     }
 
-    public Product(Long id, String name, BigDecimal price, int discount, String category, String description) {
+    public ProductEntity(Long id, String name, BigDecimal price, int discount, String category, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -56,11 +57,21 @@ public class Product {
         this.description = description;
     }
 
-    public Product(String name, BigDecimal price, String category, int discount, String description) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.discount = discount;
-        this.description = description;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductEntity that = (ProductEntity) o;
+        return discount == that.discount &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, category, discount, description);
     }
 }

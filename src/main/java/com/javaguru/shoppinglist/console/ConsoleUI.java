@@ -1,6 +1,9 @@
 package com.javaguru.shoppinglist.console;
 
-import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.domain.ProductEntity;
+import com.javaguru.shoppinglist.dto.ProductDto;
+import com.javaguru.shoppinglist.mappers.BeanMapper;
+import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.validation.ProductFieldException;
 import com.javaguru.shoppinglist.service.validation.ProductNotFoundException;
@@ -11,6 +14,7 @@ import java.util.Scanner;
 
 public class ConsoleUI {
     private final ProductService service = new ProductService();
+
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
@@ -33,15 +37,20 @@ public class ConsoleUI {
                         System.out.println("Enter product description: ");
                         String description = scanner.nextLine();
 
-                        Product product = new Product(name, price, category, discount, description);
-                        Product createdProduct = service.save(product);
-                        System.out.println("Product successfully created" + createdProduct);
+                        ProductDto dto = new ProductDto();
+                        dto.setName(name);
+                        dto.setCategory(category);
+                        dto.setPrice(price);
+                        dto.setDiscount(discount);
+                        dto.setDescription(description);
+                        ProductDto productDto = service.save(dto);
+                        System.out.println("Product successfully created" + productDto);
                         break;
                     case 2:
                         System.out.println("Enter product id: ");
                         Long id = Long.valueOf(scanner.nextLine());
-                        Product product1 = service.findProductById(id);
-                        System.out.println("Product found: " + product1);
+                        ProductEntity productEntity1 = service.findProductById(id);
+                        System.out.println("Product found: " + productEntity1);
                         break;
                     case 3:
                         return;

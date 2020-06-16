@@ -1,13 +1,12 @@
 package com.javaguru.shoppinglist.service.validation;
 
-import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.dto.ProductDto;
 
 public class ProductDescriptionValidationRule implements ProductValidationRule {
     @Override
-    public Product validate(Product product) {
-        if (product.getDescription() == null) {
+    public void validate(ProductDto productDto) {
+        if (productDto.getDescription() == null || productDto.getDescription().isEmpty()) {
             throw new ProductValidationException("Product description must be not null");
         }
-        return product;
     }
 }

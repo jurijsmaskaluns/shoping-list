@@ -1,6 +1,7 @@
 package com.javaguru.shoppinglist.service.validation;
 
-import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.domain.ProductEntity;
+import com.javaguru.shoppinglist.dto.ProductDto;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,7 @@ public class ProductValidationService {
         validationRules.add(new ProductFieldValidationRule());
     }
 
-    public void validate(Product product) {
-        validationRules.forEach(rule -> rule.validate(product));
+    public void validate(ProductDto productDto) {
+        validationRules.forEach(rule -> rule.validate(productDto));
     }
 }

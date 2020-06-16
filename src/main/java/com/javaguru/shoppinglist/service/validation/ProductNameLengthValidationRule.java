@@ -1,13 +1,12 @@
 package com.javaguru.shoppinglist.service.validation;
 
-import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.dto.ProductDto;
 
 public class ProductNameLengthValidationRule implements ProductValidationRule {
     @Override
-    public Product validate(Product product) {
-        if (product.getName().length() < 3 || product.getName().length() > 32) {
+    public void validate(ProductDto productDto) {
+        if (productDto.getName().length() < 3 || productDto.getName().length() > 32) {
             throw new ProductValidationException("название не может быть меньше 3 символов и больше 32");
         }
-        return product;
     }
 }
