@@ -1,8 +1,9 @@
-package com.javaguru.shoppinglist;
+package com.javaguru.shoppinglist.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-public class Product {
+public class ProductDto {
 
     private Long id;
     private String name;
@@ -60,8 +61,26 @@ public class Product {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDto that = (ProductDto) o;
+        return discount == that.discount &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(category, that.category) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, category, discount, description);
+    }
+
+    @Override
     public String toString() {
-        return "Product{" +
+        return "ProductDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
