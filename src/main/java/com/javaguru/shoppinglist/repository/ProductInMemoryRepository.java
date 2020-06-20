@@ -5,6 +5,7 @@ import com.javaguru.shoppinglist.service.validation.ProductPriceIsLess;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductInMemoryRepository implements ProductRepository {
 
@@ -21,7 +22,20 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public ProductEntity findProductById(Long id) {
-        return productRepository.get(id);
+    public Optional<ProductEntity> findProductById(Long id) {
+        return Optional.ofNullable(productRepository.get(id));
     }
+
+    @Override
+    public Optional<ProductEntity> findProductName(String name) {
+        for (ProductEntity entity : productRepository.values()) {
+            if (entity.getName().equalsIgnoreCase(name)) {
+                return Optional.of(entity);
+            }
+        }
+        return Optional.empty();
+//        return productRepository.values().stream().filter(entity -> entity.getName().equals(name)).findFirst();
+    }
+
+
 }

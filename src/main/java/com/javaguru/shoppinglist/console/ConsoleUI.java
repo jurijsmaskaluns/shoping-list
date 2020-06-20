@@ -2,8 +2,6 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.domain.ProductEntity;
 import com.javaguru.shoppinglist.dto.ProductDto;
-import com.javaguru.shoppinglist.mappers.BeanMapper;
-import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.validation.ProductFieldException;
 import com.javaguru.shoppinglist.service.validation.ProductNotFoundException;
@@ -13,7 +11,11 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ConsoleUI {
-    private final ProductService service = new ProductService();
+    private final ProductService service;
+
+    public ConsoleUI(ProductService service) {
+        this.service = service;
+    }
 
 
     public void start() {

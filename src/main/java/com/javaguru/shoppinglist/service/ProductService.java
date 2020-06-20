@@ -3,15 +3,23 @@ package com.javaguru.shoppinglist.service;
 import com.javaguru.shoppinglist.domain.ProductEntity;
 import com.javaguru.shoppinglist.dto.ProductDto;
 import com.javaguru.shoppinglist.mappers.BeanMapper;
-import com.javaguru.shoppinglist.repository.ProductInMemoryRepository;
+import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.validation.ProductNotFoundException;
 import com.javaguru.shoppinglist.service.validation.ProductValidationService;
 
+import java.util.Optional;
+
 public class ProductService {
 
-    private ProductInMemoryRepository productRepository = new ProductInMemoryRepository();
-    private ProductValidationService validationService = new ProductValidationService();
-    private BeanMapper beanMapper = new BeanMapper();
+    private final ProductRepository productRepository;
+    private final ProductValidationService validationService;
+    private final BeanMapper beanMapper;
+
+    public ProductService(ProductRepository productRepository, ProductValidationService validationService, BeanMapper beanMapper) {
+        this.productRepository = productRepository;
+        this.validationService = validationService;
+        this.beanMapper = beanMapper;
+    }
 
     public ProductDto save(ProductDto productDto) {
         validationService.validate(productDto);
@@ -21,9 +29,10 @@ public class ProductService {
     }
 
     public ProductEntity findProductById(Long id) {
-        ProductEntity productEntity = productRepository.findProductById(id);
-        if (productEntity != null) {
-            return productEntity;
+
+        Optional<ProductEntity> productById = productRepository.findProductById(id);
+        if (productById.isPresent()) {
+            return productById.get();
         } else {
             throw new ProductNotFoundException("Product not found, id: " + id);
         }
